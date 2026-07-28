@@ -39,16 +39,6 @@ streamlit run app.py
 
 Open `http://localhost:8501` in your browser. No configuration needed.
 
-## Deploy
-
-Push to GitHub and deploy on any of these for free:
-
-| Platform | How |
-|---|---|
-| **Streamlit Cloud** | streamlit.io/cloud → New app → select repo → `app.py` |
-| **Hugging Face Spaces** | huggingface.co → New Space → SDK: Streamlit → connect repo |
-| **Render** | render.com → New Web Service → start command: `streamlit run app.py --server.port 10000` |
-
 ## Testing
 
 ```bash
@@ -66,7 +56,6 @@ pytest -v
 ├── templates/             # Page templates
 ├── styles/                # CSS (dark theme)
 ├── tests/                 # pytest (4 passing)
-├── deploy/                # Docker support
 ├── sw.js                  # Service worker (PWA)
 └── .github/workflows/     # CI
 ```
