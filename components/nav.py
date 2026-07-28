@@ -1,0 +1,30 @@
+import streamlit as st
+from datetime import datetime
+from config.settings import CATEGORIES
+
+_LOGO_B64 = "iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAEt0lEQVR4nI2XO6hcRRiAv3/m3N2b+0hQCaJwiRFJESwSJWBiIRJFkICxSBEDghYBQUltYae9BLGzEsFO1JggimAVLUQQMYUQDJIbk5AQ9+597Nk981vMzJnzmA3+sDvnnH/mf79GxnZNyYIAGtYEigas+GcFkf7p7rlIS9GA8f9FG91kqfWRiM8JgiRc87y2TkSWWu8hPJuc7Jpooxnm80A7axeTo2WS9A2TSX+j3OctBzW9ORpE5YpESmtEYqBtViKIBKeoNLc1njUpoAZEEQ0OacSLhud2DGikq3mzzybzMPcHM0SMoOqSSmGpBQgBTcI2GKkD55D9+xFray2jJswxRsTrteswKxG7QNcfSQBpm78WQQBxDD/5kOL0K+BcL+96TON5VcRaqp9+Zefk6+hoE5EiSB1cnupAM0ejUAad7WD2PcbiX5fbgfp/wTkwhp0XT1N9/y0y2ANVlbFA9EHNQ8CEX2Fgaxt27UJHG+iduyDZDK6P4hyyuoo8sMdTn1Ositxnjf4oJ8AEdQrOh+30/fNMz59HFh+E6axdboLf1FooR9jjL7B48dNapqBmg722BRAJf1UFWiH71tDZFApbVycdb0K5DboDs4ouKArWwmwCo3HWOE3o2VFVYWAYfvYxS3/8yK6fLyIP74Xp1G+wFsT61VqfFdaAtWhY/R7jBc9aOEERP4jiCU3H2CPHKF571Us8Keugl2gmY8LPhe8Swid0kRqfD9rm1yIRblTs4SClW1XVvUEB3dxCq3uwVQCzOZpZlBFs9F3QhSJJrqnMhtQhatxY7TNPoVdfRoa7oXI91gqIsWg5xhw9Wtfcfjf1ihf57Mh8td6fg7NnGJw9k2nfedDZDIqiU0Oi01p1oFvLOvI6r+30i0tUF75BBito5VLqRSGd85YstzCHD7Hw9hs5seqnbB3o9xtJLnjuKPbQwV4hUhTujZDlJRgMUFchS0tecGvpVgC6FlB828xDw8fX/8FduQJ2QDM6xRjsyZdwl3/Brd/wbB59BLv3oTk0vRBF87V2Q86pkdd4E711GykWfXUEUEWNQSclevce3Lzt2/ry8hzmieCcGJA0Mah6cwe0Ofwk5uABn+NxyohT4O07mGePwPPHvHALRbZ7puGn7gUd04s0SrLCpPR+VKX6+jtmX11ABivgYikODKwJPQMotzFPH2bhnTdjje/JoNLpBagDGaJ/XkVHG5jdq0w//xI58DhmZRlXOYpTJyhOnbiPaTu6AO7uv7jffgfTcFuAVIoBVJFiiFu/RvnWu9gTx5ld+oHhRx+gm1ve1zRHtnbqSgPjy6aif68zOfceenMdWVj12UEc/aQ5kESCioqB2TbKFLP2BDIc+GYkEgI/ny2dQc6/37iFlhtQrCDqGj0jPI3tmiYTNMAYVATKHcCFY7lxtcu2S2cBsQVaVa3ZMfIsmpaMgQ8EXykUg1YU1+xCDRAR38JbIsV0VtThg7UXg9rMgrBf2lsCjTT6ki5s8fqlIerTl3Q2yVU36paYMK8Ud8waiUr9orU5YzDmwjKNYQ1lOrcuo5q7arTDokVU2kQkStUMflqTd06iGor81bofk1nN6lts90IXbCLe9D1aQu3W/wDpkx813H2WNwAAAABJRU5ErkJggg=="
+
+
+def _nav_link(key, label, active_page, active_cat):
+    if key == "home":
+        href = "/"
+        cls = "active" if active_page == "home" else ""
+    else:
+        href = f"?page=category&cat={label}"
+        cls = "active" if active_cat and active_cat.replace(" ", "_") == key else ""
+    return f'<a href="{href}" target="_self" class="{cls}">{label}</a>'
+
+
+def render_nav(active_page="home", active_cat=None):
+    now = datetime.now().strftime("%b %d  %I:%M %p")
+    cats = [("home", "All")] + [(c.lower().replace(" ", "_"), c) for c in CATEGORIES]
+    links = "".join(_nav_link(k, l, active_page, active_cat) for k, l in cats)
+    st.html(f"""<div class="nav">
+        <a href="/" target="_self" style="text-decoration:none;"><div class="nav-brand"><img src="data:image/png;base64,{_LOGO_B64}" style="height:28px;width:28px;border-radius:6px;"> SocialPulse</div></a>
+        <div class="nav-links">{links}</div>
+        <div class="nav-right">
+            <a href="?page=search" target="_self" style="text-decoration:none;"><input class="search-input" placeholder="Search / \u2318 / ..." readonly></a>
+            <div class="clock">{now}</div>
+            <div class="live-badge"><span class="live-dot"></span> LIVE</div>
+        </div>
+    </div>""")

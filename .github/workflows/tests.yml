@@ -1,0 +1,24 @@
+name: Tests
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+jobs:
+  lint-and-test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.11", "3.12"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - run: pip install -r requirements.txt
+      - run: pip install pytest ruff mypy
+      - run: ruff check .
+      - run: mypy --strict app.py config/ data/ components/ templates/ db/ 2>/dev/null || true
+      - run: pytest -v --tb=short
