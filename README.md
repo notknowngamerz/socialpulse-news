@@ -3,7 +3,8 @@
   <h1>SocialPulse — News Hub</h1>
   <p>
     <strong>A news dashboard built with Streamlit.</strong><br>
-    7 categories, 180+ articles, dark glassmorphism UI.
+    7 categories, 180+ articles, dark glassmorphism UI.<br><br>
+    <a href="https://socialpulse-news.streamlit.app/" target="_blank"><strong>Live Demo →</strong></a>
   </p>
   <p>
     <a href="#features">Features</a> •
